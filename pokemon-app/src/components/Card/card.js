@@ -1,33 +1,35 @@
 import React from 'react'
 
-const card = ( {pokemon} ) => {
+const Card = ({pokemon}) => {
   return (
     <div className='card'>
-      <div className='cardImg'>
+      <div className="cardImg">
         <img src={pokemon.sprites.front_default} alt="" />
       </div>
-      <h3 className='cardName'>{pokemon.name}</h3>
+      <h3 className='cardname'>{pokemon.name}</h3>
       <div className="cardTypes">
         <div>タイプ</div>
         {pokemon.types.map((type) => {
-          return <div>
+          return(
+          <div>
             <span className='typeName'>{type.type.name}</span>
           </div>
+          ) 
         })}
       </div>
-      <div className="cardInfo">
-        <div className="cardData">
-          <p className='title'>重さ：{pokemon.weight}</p>
+      <div className="caedInfo">
+        <div className='cardData'>
+          <p>重さ：{pokemon.weight}</p>
         </div>
-        <div className="cardData">
-          <p className='title'>高さ：{pokemon.height}</p>
+        <div className='cardData'>
+          <p>高さ：{pokemon.height}</p>
         </div>
-        <div className="cardData">
-          <p className='title'>Ability：{pokemon.abilities[0].ability.name}</p>
+        <div className='cardData'>
+          <p>ability：{pokemon.abilities[0].ability.name}</p>
         </div>
       </div>
     </div>
   )
-};
+}
 
-export default card
+export default Card
