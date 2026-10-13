@@ -2,10 +2,13 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import { getAllPokemon,getPokemon } from './utilis/pokemon';
 import Card from './components/Card/card';
+import Navbar from './components/Navbar/Navbar';
 function App() {
   const initialURL = "https://pokeapi.co/api/v2/pokemon/";
   const [loading, setLoading] = useState(true);
   const [pokemonData, setpokemonData] = useState([]);
+  const [nextURL, setNextURL] = useState("");
+  const [prevURL, setPrevURL] = useState("");
 
   useEffect(() => {
     const fetchPokemonData = async () => {
@@ -13,6 +16,7 @@ function App() {
       let res = await getAllPokemon(initialURL);
       loadPokemon(res.results);
       setLoading(false);
+      setNextURL(res.next)
       console.log(res)
       // 個別に取得
       
@@ -30,10 +34,23 @@ function App() {
     );
     setpokemonData(_pokemonData);
   };
-console.log(pokemonData)
+// console.log(pokemonData)
+
+const handleNextPage = async () => {
+  setLoading(true);
+  let data = await getAllPokemon(nextURL);
+  // console.log(data);
+  await loadPokemon(data.results);
+  setLoading(false);
+};
+const handlePrevPage = () => {
+  
+};
 
    return (
-    <div>
+    <>
+    <Navbar />
+    <div className='App'>
       {loading ? 
       <h1>Load中</h1>:
       <div className="pokemonCardContainer">
@@ -42,8 +59,14 @@ console.log(pokemonData)
         })}
       </div>
       }
+      <div className="btn">
+        <button onClick={handlePrevPage}>前へ</button>
+        <button onClick={handleNextPage}>次へ</button>
 
+      </div>
     </div>
+
+    </>
   );
 }
 
