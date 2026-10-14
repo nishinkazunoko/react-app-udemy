@@ -17,6 +17,8 @@ function App() {
       loadPokemon(res.results);
       setLoading(false);
       setNextURL(res.next)
+      setPrevURL(res.next)
+
       console.log(res)
       // 個別に取得
       
@@ -41,10 +43,20 @@ const handleNextPage = async () => {
   let data = await getAllPokemon(nextURL);
   // console.log(data);
   await loadPokemon(data.results);
+  setNextURL(data.next);
+  setPrevURL(data.previous);
+
   setLoading(false);
 };
-const handlePrevPage = () => {
-  
+const handlePrevPage = async () => {
+  if(!prevURL) return;
+
+  setLoading(true);
+  let data = await getAllPokemon(prevURL);
+  await loadPokemon(data.results);
+  setNextURL(data.next);
+  setPrevURL(data.previous);
+  setLoading(false)
 };
 
    return (
